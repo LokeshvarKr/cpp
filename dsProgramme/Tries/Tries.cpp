@@ -33,10 +33,6 @@ private:
 				}
 			}
 		
-			void initialize(){
-				cout<<"hello"<<endl; 
-			}
-		
 			~TrieNode(){
 				for(int i=0;i<26;i++){
 					delete child[i];
@@ -93,8 +89,40 @@ private:
 		}
 	}
 
-	void deleteWordUtil(TrieNode *root,string word){
-		// some code 
+	
+	bool isEmpty(TrieNode *root){
+	    bool flag=true;
+	    for(int i=0;i<26;i++){
+	        if(root->child[i]!=NULL){
+	            flag=false;
+	        }
+	    }
+	    return flag;
+	}
+
+	TrieNode* deleteWordUtil(TrieNode *root,string word){
+		if(root==NULL){
+        	return NULL;
+ 		}
+    	if(word.length()==0){
+        	if(root->end_word==true){
+            	if(isEmpty(root)){
+                	delete root;
+	                root=NULL;
+	            }
+	            else{
+	                root->end_word=false;
+	            }
+	        }
+	        return root;
+	    }
+	    int index=word[0]-'a';
+	    root->child[index]=deleteWordUtil(root->child[index],word.substr(1));
+	    if(root->end_word == false && isEmpty(root)){
+	        delete root;
+	        return NULL;
+	    }
+	    return root;
 	}
 
 public:
@@ -124,7 +152,7 @@ public:
 			temp=temp->child[index];
 		}
 
-		if(temp->end_word=true){
+		if(temp->end_word==true){
 			return true;
 		}
 		return false;
@@ -135,7 +163,7 @@ public:
 			return;
 		}
 		word=toLower(word);
-		deleteWordUtil(root,word);
+		root=deleteWordUtil(root,word);
 	}
 
 	void printTrie(){
