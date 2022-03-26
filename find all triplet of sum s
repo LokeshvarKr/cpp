@@ -1,0 +1,67 @@
+#include <iostream>
+// #include<unordered_map>
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin>>n;
+    int* a=new int[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    int sum;
+    cin>>sum;
+    sort(a,a+n);
+    int count=0;
+	 for(int i=0;i<n-2;i++){
+        unordered_map<int,int> m;
+        for(int j=i+1;j<n;j++){
+            int x=sum-(a[i]+a[j]);
+            if(m.find(x)!=m.end()){
+                count+=m[x];
+            }
+            m[a[j]]++;
+        }
+    }
+    cout<<count<<endl;
+    
+    
+    delete[] a;
+	return 0;
+}
+
+
+
+
+
+// #include <iostream>
+// // #include<unordered_map>
+// #include<bits/stdc++.h>
+// using namespace std;
+
+// int main() {
+//     int n;
+//     cin>>n;
+//     int* a=new int[n];
+//     for(int i=0;i<n;i++){
+//         cin>>a[i];
+//     }
+//     int sum;
+//     cin>>sum;
+//     sort(a,a+n);
+//     int count=0;
+// 	 for(int i=0;i<n-2;i++){
+//         for(int j=i+1;j<n-1;j++){
+//             for(int k=j+1;k<n;k++){
+//                 if(a[i]+a[j]+a[k]==sum){
+//                     count+=1;
+//                 }
+//             }
+//         }
+//     }
+    
+//     cout<<count<<endl;
+//     delete[] a;
+// 	return 0;
+// }
